@@ -23,11 +23,7 @@ Build command: pip install -r requirements.txt
 Start command: gunicorn --bind 0.0.0.0:$PORT wsgi:app
 ```
 
-It securely injects `DATABASE_URL` from the Render PostgreSQL instance and generates the Flask/JWT secrets. Its `CORS_ORIGINS` value is set to `https://sustainable-xjtlu-10.vercel.app`. Apply migrations before accepting traffic:
-
-```bash
-flask --app wsgi:app db upgrade
-```
+It securely injects `DATABASE_URL` from the Render PostgreSQL instance and generates the Flask/JWT secrets. Its `CORS_ORIGINS` value is set to `https://sustainable-xjtlu-10.vercel.app`. On the free tier, each API start first runs the idempotent `flask --app wsgi:app db upgrade` migration, then starts Gunicorn.
 
 ## Local full-stack validation
 
