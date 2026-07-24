@@ -27,7 +27,7 @@ The active implementation is `frontend/` (Next.js) plus `backend/` (Flask REST A
 ## Next implementation steps
 
 1. Push this rewrite to `jzforever1640-wq/Sustainable-xjtlu`.
-2. Create the Vercel project with `sustainable-xjtlu/frontend` as Root Directory.
+2. Create the Vercel project with `frontend` as Root Directory.
 3. Deploy Flask and PostgreSQL, set `NEXT_PUBLIC_API_BASE_URL`, then set the Flask `CORS_ORIGINS` to the Vercel domain.
 4. Add database migrations for normalized SDG, activity, tag and content-type tables.
 5. Add a worker queue for ingestion, classification and embeddings.

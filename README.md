@@ -34,7 +34,7 @@ Open `http://localhost:3000`.
 
 ## Deploy the frontend
 
-Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The Vercel project must use `sustainable-xjtlu/frontend` as its Root Directory. Set `NEXT_PUBLIC_API_BASE_URL` to the deployed Flask API before deployment.
+Follow [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md). The Vercel project must use `frontend` as its Root Directory. Set `NEXT_PUBLIC_API_BASE_URL` to the deployed Flask API before deployment.
 
 ## Team workflow
 

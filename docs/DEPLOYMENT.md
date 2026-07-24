@@ -2,7 +2,7 @@
 
 ## Frontend: Vercel
 
-Create a new Vercel project from `jzforever1640-wq/Sustainable-xjtlu` and set **Root Directory** to `sustainable-xjtlu/frontend`.
+Create a Vercel project from `jzforever1640-wq/Sustainable-xjtlu` and set **Root Directory** to `frontend`.
 
 Set this environment variable in Vercel:
 
@@ -14,14 +14,16 @@ Vercel detects Next.js automatically. Build command: `npm run build`; output com
 
 ## API: Render
 
-Deploy `sustainable-xjtlu/backend` as a Python web service.
+The repository includes `render.yaml`, which creates both the Flask service and its PostgreSQL database. In Render, choose **New → Blueprint**, connect `jzforever1640-wq/Sustainable-xjtlu`, and select the repository-root `render.yaml`.
+
+The Blueprint deploys the root `backend` directory as a Python web service:
 
 ```text
 Build command: pip install -r requirements.txt
 Start command: gunicorn --bind 0.0.0.0:$PORT wsgi:app
 ```
 
-Set the variables from `backend/.env.example` and set `CORS_ORIGINS` to the new Vercel URL. Apply migrations before accepting traffic:
+It securely injects `DATABASE_URL` from the Render PostgreSQL instance and generates the Flask/JWT secrets. Its `CORS_ORIGINS` value is set to `https://sustainable-xjtlu-10.vercel.app`. Apply migrations before accepting traffic:
 
 ```bash
 flask --app wsgi:app db upgrade
@@ -30,7 +32,6 @@ flask --app wsgi:app db upgrade
 ## Local full-stack validation
 
 ```bash
-cd sustainable-xjtlu
 cp backend/.env.example backend/.env
 docker compose up --build
 ```

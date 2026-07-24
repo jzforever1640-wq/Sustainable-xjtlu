@@ -8,3 +8,4 @@ __pycache__/
 backend/.env
 frontend/.env
 *.log
+backend/ingestion/data/xjtlu_content.json

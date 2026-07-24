@@ -26,23 +26,6 @@ def create_app():
         "development-secret-key",
     )
 
-    required_settings = [
-        "DB_HOST",
-        "DB_USER",
-        "DB_PASSWORD",
-    ]
-
-    missing_settings = [
-        setting
-        for setting in required_settings
-        if not os.getenv(setting)
-    ]
-
-    if missing_settings:
-        raise RuntimeError(
-            "缺少数据库配置：" + ", ".join(missing_settings)
-        )
-
     jwt_secret_key = os.getenv("JWT_SECRET_KEY")
 
     if not jwt_secret_key:
@@ -51,15 +34,43 @@ def create_app():
     app.config["JWT_SECRET_KEY"] = jwt_secret_key
     app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 
-    database_url = URL.create(
-        drivername="postgresql+psycopg",
-        username=os.getenv("DB_USER"),
-        password=os.getenv("DB_PASSWORD"),
-        host=os.getenv("DB_HOST"),
-        port=int(os.getenv("DB_PORT", "5432")),
-        database=os.getenv("DB_NAME", "postgres"),
-        query={"sslmode": "require"},
-    )
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        # Render supplies a standard PostgreSQL URL. Explicitly select the
+        # installed psycopg v3 driver for SQLAlchemy.
+        if database_url.startswith("postgresql://"):
+            database_url = database_url.replace(
+                "postgresql://",
+                "postgresql+psycopg://",
+                1,
+            )
+    else:
+        required_settings = [
+            "DB_HOST",
+            "DB_USER",
+            "DB_PASSWORD",
+        ]
+        missing_settings = [
+            setting
+            for setting in required_settings
+            if not os.getenv(setting)
+        ]
+
+        if missing_settings:
+            raise RuntimeError(
+                "缺少数据库配置：" + ", ".join(missing_settings)
+            )
+
+        database_url = URL.create(
+            drivername="postgresql+psycopg",
+            username=os.getenv("DB_USER"),
+            password=os.getenv("DB_PASSWORD"),
+            host=os.getenv("DB_HOST"),
+            port=int(os.getenv("DB_PORT", "5432")),
+            database=os.getenv("DB_NAME", "postgres"),
+            query={"sslmode": "require"},
+        )
 
     app.config["SQLALCHEMY_DATABASE_URI"] = database_url
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
