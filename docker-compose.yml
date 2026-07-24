@@ -1,0 +1,37 @@
+services:
+  database:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: sustainable_xjtlu
+      POSTGRES_USER: sustainable_xjtlu
+      POSTGRES_PASSWORD: sustainable_xjtlu
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build: ./backend
+    env_file: ./backend/.env
+    environment:
+      DB_HOST: database
+      DB_PORT: 5432
+      DB_NAME: sustainable_xjtlu
+      DB_USER: sustainable_xjtlu
+      DB_PASSWORD: sustainable_xjtlu
+    depends_on:
+      - database
+    ports:
+      - "5000:5000"
+
+  web:
+    build: ./frontend
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:5000
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+
+volumes:
+  postgres_data:

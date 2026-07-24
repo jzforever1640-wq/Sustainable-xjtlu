@@ -1,0 +1,10 @@
+allowBuilds:
+  sharp: set this to true or false
+  unrs-resolver: set this to true or false
+packages:
+  - .
+
+onlyBuiltDependencies:
+  - sharp
+  - unrs-resolver
+dangerouslyAllowAllBuilds: true

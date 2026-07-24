@@ -1,0 +1,52 @@
+{
+  "copy": {
+    "en": {
+      "eyebrow": "University sustainability",
+      "heroIntro": "Discover how our university community drives positive change through education, research, and action.",
+      "heroStatement": "Together for a better world.",
+      "getInvolved": "Get involved",
+      "topicsEyebrow": "Shared challenges, shared progress",
+      "topicsTitle": "Explore by SDG Topics",
+      "viewAll": "View all topics",
+      "searchTitle": "Search our content",
+      "searchText": "Find news, blogs, activities and more related to sustainability at XJTLU.",
+      "latestEyebrow": "From the community",
+      "latestTitle": "Latest stories",
+      "read": "Read story",
+      "recent": "Recently published"
+    },
+    "zh": {
+      "eyebrow": "大学可持续发展",
+      "heroIntro": "了解西浦师生如何通过教育、研究与实际行动推动积极改变。",
+      "heroStatement": "携手共创更美好的世界。",
+      "getInvolved": "参与行动",
+      "topicsEyebrow": "共同挑战，共同行动",
+      "topicsTitle": "按可持续发展主题浏览",
+      "viewAll": "查看全部主题",
+      "searchTitle": "搜索平台内容",
+      "searchText": "查找与西浦可持续发展相关的动态、文章、活动及更多内容。",
+      "latestEyebrow": "来自校园共同体",
+      "latestTitle": "最新内容",
+      "read": "阅读内容",
+      "recent": "最近发布"
+    }
+  },
+  "topics": [
+    {"nameEn":"Environment","nameZh":"环境保护","descriptionEn":"Biodiversity, waste reduction and green living.","descriptionZh":"生物多样性、减废行动与绿色生活。","icon":"leaf","color":"green"},
+    {"nameEn":"Sustainable Campus","nameZh":"可持续校园","descriptionEn":"Facilities, operations and everyday improvement.","descriptionZh":"校园设施、运营管理与日常改善。","icon":"building","color":"blue"},
+    {"nameEn":"Education","nameZh":"可持续教育","descriptionEn":"Learning resources, workshops and student projects.","descriptionZh":"学习资源、主题工作坊与学生项目。","icon":"cap","color":"purple"},
+    {"nameEn":"Community","nameZh":"社区参与","descriptionEn":"Volunteering and community-facing initiatives.","descriptionZh":"志愿服务与面向社区的可持续行动。","icon":"people","color":"orange"},
+    {"nameEn":"Climate Action","nameZh":"气候行动","descriptionEn":"Low-carbon awareness and climate progress.","descriptionZh":"低碳意识与气候行动进展。","icon":"globe","color":"green"},
+    {"nameEn":"Energy","nameZh":"清洁能源","descriptionEn":"Energy saving, efficiency and smart practices.","descriptionZh":"节能、能源效率与智慧校园实践。","icon":"bolt","color":"gold"}
+  ],
+  "portals": [
+    {"id":"news","letter":"N","titleEn":"News","titleZh":"校园动态","textEn":"Latest updates and announcements on sustainability at XJTLU.","textZh":"查看西浦最新的可持续发展通知与校园动态。","linkEn":"Explore news","linkZh":"浏览校园动态","href":"/news"},
+    {"id":"blogs","letter":"B","titleEn":"Blogs","titleZh":"专题文章","textEn":"Insights and stories from our community on sustainable living and innovation.","textZh":"阅读来自校园共同体的可持续生活与创新故事。","linkEn":"Explore blogs","linkZh":"阅读专题文章","href":"/blogs"},
+    {"id":"get-involved","letter":"G","titleEn":"Get involved","titleZh":"参与行动","textEn":"Join activities, projects and initiatives to make a real impact.","textZh":"参与活动、项目和倡议，共同创造真实影响。","linkEn":"Explore opportunities","linkZh":"查看参与机会","href":"/get-involved"}
+  ],
+  "fallbackStories": [
+    {"id":-1,"title":"Campus sustainability starts with shared action","summary":"Explore how students, researchers and professional teams are building a greener university together.","body":"","category":"News","source_url":null,"cover_image_url":null,"published_at":null},
+    {"id":-2,"title":"Learning for a more sustainable future","summary":"New perspectives connect education, innovation and the United Nations Sustainable Development Goals.","body":"","category":"Blog","source_url":null,"cover_image_url":null,"published_at":null},
+    {"id":-3,"title":"Find your next campus action","summary":"Discover practical opportunities to volunteer, learn and contribute to the XJTLU community.","body":"","category":"Activity","source_url":null,"cover_image_url":null,"published_at":null}
+  ]
+}
