@@ -45,8 +45,8 @@
     {"id":"get-involved","letter":"G","titleEn":"Get involved","titleZh":"参与行动","textEn":"Join activities, projects and initiatives to make a real impact.","textZh":"参与活动、项目和倡议，共同创造真实影响。","linkEn":"Explore opportunities","linkZh":"查看参与机会","href":"/get-involved"}
   ],
   "fallbackStories": [
-    {"id":-1,"title":"Campus sustainability starts with shared action","summary":"Explore how students, researchers and professional teams are building a greener university together.","body":"","category":"News","source_url":null,"cover_image_url":null,"published_at":null},
-    {"id":-2,"title":"Learning for a more sustainable future","summary":"New perspectives connect education, innovation and the United Nations Sustainable Development Goals.","body":"","category":"Blog","source_url":null,"cover_image_url":null,"published_at":null},
-    {"id":-3,"title":"Find your next campus action","summary":"Discover practical opportunities to volunteer, learn and contribute to the XJTLU community.","body":"","category":"Activity","source_url":null,"cover_image_url":null,"published_at":null}
+    {"id":-1,"title":"Campus sustainability starts with shared action","summary":"Explore how students, researchers and professional teams are building a greener university together.","body":"","category":"News","source_url":null,"cover_image_url":null,"sdg_tags":[],"published_at":null},
+    {"id":-2,"title":"Learning for a more sustainable future","summary":"New perspectives connect education, innovation and the United Nations Sustainable Development Goals.","body":"","category":"Blog","source_url":null,"cover_image_url":null,"sdg_tags":[],"published_at":null},
+    {"id":-3,"title":"Find your next campus action","summary":"Discover practical opportunities to volunteer, learn and contribute to the XJTLU community.","body":"","category":"Activity","source_url":null,"cover_image_url":null,"sdg_tags":[],"published_at":null}
   ]
 }

@@ -75,7 +75,6 @@ export default function TopicsExplorer() {
       <ContentBrowser
         key={selectedTopic || "all-topics"}
         mode="topic"
-        initialQuery={selectedTopic}
         initialSdg={
           selectedTopic
             ? sdgTag(
