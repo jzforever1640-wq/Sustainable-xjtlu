@@ -104,7 +104,10 @@ export default function ContentBrowser({
   const filteredItems = modeItems;
 
   return (
-    <section className="routeContent">
+    <section
+      aria-busy={loading}
+      className={`routeContent${mode === "topic" ? " topicResultsContent" : ""}`}
+    >
       <div className="routeToolbar">
         <input
           aria-label={t.search}

@@ -833,6 +833,10 @@ button[type="submit"]:hover {
   margin: 6px 0 0;
 }
 
+.topicResultsContent {
+  min-height: 620px;
+}
+
 .involvementGrid {
   display: grid;
   gap: 18px;
@@ -1968,6 +1972,10 @@ form {
     min-height: auto;
     padding-bottom: 54px;
     padding-top: 42px;
+  }
+
+  .topicResultsContent {
+    min-height: 480px;
   }
 
   .accountOverviewIntro h1,

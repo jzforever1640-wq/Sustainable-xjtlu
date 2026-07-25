@@ -53,6 +53,7 @@ export default function TopicsExplorer() {
               href={`/topics?topic=${encodeURIComponent(en)}`}
               key={en}
               onClick={() => setSelectedTopic(en)}
+              scroll={false}
             >
               <strong>{index + 1}</strong>
               <span>{language === "en" ? en : zh}</span>
@@ -73,7 +74,6 @@ export default function TopicsExplorer() {
         </section>
       )}
       <ContentBrowser
-        key={selectedTopic || "all-topics"}
         mode="topic"
         initialSdg={
           selectedTopic
