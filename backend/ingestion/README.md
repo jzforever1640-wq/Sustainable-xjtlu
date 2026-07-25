@@ -26,6 +26,14 @@ python -m unittest ingestion.tests.test_crawl_xjtlu
 
 ## Current database fit
 
-The existing `contents` table is sufficient for this validation: title, summary, body, category, source URL, cover image, publication time, and status all map directly. `sdg_tags` remain in the crawler JSON for this pilot because the database has no normalized SDG-tag relation yet. Add `sdg_goals` and `content_sdg_goals` before treating SDG tagging as production data.
+The existing `contents` table stores title, summary, body, category, source URL, cover image, publication time, status, and `sdg_tags`. SDG tags are stored as a PostgreSQL JSON array so one item can be associated with several goals and the API can filter by an exact goal.
+
+After deploying the migration, re-run the importer to synchronise tags for records already imported:
+
+```bash
+python -m ingestion.import_contents --status published
+```
+
+Matching source URLs are not duplicated; their SDG tags are updated. In a later analytics phase, `sdg_goals` and `content_sdg_goals` can be added as normalized tables if goal-level reporting needs more relationships or metadata.
 
 The crawler output is generated data and is intentionally not committed. It must be regenerated in an environment that can reach `www.xjtlu.edu.cn`.

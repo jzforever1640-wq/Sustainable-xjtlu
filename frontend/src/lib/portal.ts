@@ -8,6 +8,7 @@ export type ContentItem = {
   category: string;
   source_url: string | null;
   cover_image_url: string | null;
+  sdg_tags: string[];
   published_at: string | null;
 };
 

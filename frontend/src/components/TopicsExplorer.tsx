@@ -25,6 +25,10 @@ const allSdgs = [
   ["Partnerships for the Goals", "促进目标实现的伙伴关系"],
 ] as const;
 
+function sdgTag(index: number, name: string) {
+  return `SDG ${index + 1} ${name}`;
+}
+
 export default function TopicsExplorer() {
   const { language } = usePortalLanguage();
   const [selectedTopic, setSelectedTopic] = useState("");
@@ -72,6 +76,14 @@ export default function TopicsExplorer() {
         key={selectedTopic || "all-topics"}
         mode="topic"
         initialQuery={selectedTopic}
+        initialSdg={
+          selectedTopic
+            ? sdgTag(
+                allSdgs.findIndex(([en]) => en === selectedTopic),
+                selectedTopic,
+              )
+            : ""
+        }
       />
     </>
   );

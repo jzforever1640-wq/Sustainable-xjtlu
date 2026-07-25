@@ -113,6 +113,13 @@ export default function ContentDetail() {
           <span aria-hidden="true">&larr;</span> {t.back}
         </Link>
         <span className="pill">{item.category}</span>
+        {item.sdg_tags.length > 0 && (
+          <div className="sdgTags contentSdgTags" aria-label="SDG tags">
+            {item.sdg_tags.map((tag) => (
+              <span className="sdgTag" key={tag}>{tag}</span>
+            ))}
+          </div>
+        )}
         <h1>{item.title}</h1>
         <time>{formatContentDate(item.published_at, language)}</time>
         {item.cover_image_url && (

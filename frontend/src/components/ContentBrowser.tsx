@@ -50,9 +50,11 @@ function matchesMode(item: ContentItem, mode: BrowserMode) {
 export default function ContentBrowser({
   mode = "all",
   initialQuery = "",
+  initialSdg = "",
 }: {
   mode?: BrowserMode;
   initialQuery?: string;
+  initialSdg?: string;
 }) {
   const { language } = usePortalLanguage();
   const [items, setItems] = useState<ContentItem[]>([]);
@@ -68,6 +70,7 @@ export default function ContentBrowser({
       const params = new URLSearchParams({ page: "1", page_size: "50" });
       if (query.trim()) params.set("q", query.trim());
       if (category !== "All") params.set("category", category);
+      if (initialSdg) params.set("sdg", initialSdg);
 
       setLoading(true);
       apiRequest<{ items: ContentItem[] }>(`/api/contents?${params}`, {
@@ -84,7 +87,7 @@ export default function ContentBrowser({
       controller.abort();
       window.clearTimeout(timer);
     };
-  }, [category, query]);
+  }, [category, initialSdg, query]);
 
   const modeItems = useMemo(() => {
     const matched = items.filter((item) => matchesMode(item, mode));
@@ -152,8 +155,15 @@ export default function ContentBrowser({
             )}
             <div>
               <span className="pill">{item.category}</span>
+              {item.sdg_tags.length > 0 && (
+                <div className="sdgTags" aria-label="SDG tags">
+                  {item.sdg_tags.map((tag) => (
+                    <span className="sdgTag" key={tag}>{tag}</span>
+                  ))}
+                </div>
+              )}
               <h2>{item.title}</h2>
-              <p>{item.summary ?? item.body.slice(0, 150)}</p>
+              <p className="articleSummary">{item.summary ?? item.body.slice(0, 150)}</p>
               <time>{formatContentDate(item.published_at, language)}</time>
               <Link href={`/content/${item.id}`}>
                 {t.read} <span aria-hidden="true">&rarr;</span>

@@ -1271,6 +1271,36 @@ textarea:focus {
   text-transform: uppercase;
 }
 
+.sdgTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.sdgTag {
+  background: #f1eeff;
+  border: 1px solid #ded5ff;
+  border-radius: 999px;
+  color: #4c25c8;
+  display: inline-flex;
+  font-size: 0.7rem;
+  font-weight: 800;
+  line-height: 1.2;
+  padding: 5px 8px;
+}
+
+.contentSdgTags {
+  margin-bottom: 12px;
+}
+
+.articleSummary {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  overflow: hidden;
+}
+
 .item strong,
 .item small,
 .item em {

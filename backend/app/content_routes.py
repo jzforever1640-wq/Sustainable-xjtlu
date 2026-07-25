@@ -24,6 +24,7 @@ def serialize_content(content):
         "category": content.category,
         "source_url": content.source_url,
         "cover_image_url": content.cover_image_url,
+        "sdg_tags": content.sdg_tags or [],
         "status": content.status,
         "published_at": (
             content.published_at.isoformat()
@@ -48,6 +49,7 @@ def get_contents():
     """Return published content with server-side search and pagination."""
     query = str(request.args.get("q", "")).strip()
     category = str(request.args.get("category", "")).strip()
+    sdg_tag = str(request.args.get("sdg", "")).strip()
 
     try:
         page = max(int(request.args.get("page", 1)), 1)
@@ -70,6 +72,11 @@ def get_contents():
     if category:
         statement = statement.where(Content.category == category)
         count_statement = count_statement.where(Content.category == category)
+
+    if sdg_tag:
+        sdg_filter = Content.sdg_tags.contains([sdg_tag])
+        statement = statement.where(sdg_filter)
+        count_statement = count_statement.where(sdg_filter)
 
     if query:
         pattern = f"%{query}%"
@@ -179,6 +186,15 @@ def create_content():
             "message": "Status must be draft or published",
         }), 400
 
+    raw_sdg_tags = payload.get("sdg_tags", [])
+    if not isinstance(raw_sdg_tags, list) or not all(
+        isinstance(tag, str) and tag.strip() for tag in raw_sdg_tags
+    ):
+        return jsonify({
+            "status": "error",
+            "message": "sdg_tags must be an array of non-empty strings",
+        }), 400
+
     content = Content(
         title=str(payload["title"]).strip(),
         summary=(
@@ -195,6 +211,7 @@ def create_content():
             str(payload.get("cover_image_url", "")).strip()
             or None
         ),
+        sdg_tags=list(dict.fromkeys(tag.strip() for tag in raw_sdg_tags)),
         status=status,
         published_at=(
             datetime.now(timezone.utc)

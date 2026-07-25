@@ -1,4 +1,5 @@
 from . import db
+from sqlalchemy.dialects.postgresql import JSONB
 
 
 class User(db.Model):
@@ -43,6 +44,14 @@ class Content(db.Model):
     category = db.Column(db.String(100), nullable=False, index=True)
     source_url = db.Column(db.String(1000))
     cover_image_url = db.Column(db.String(1000))
+    # Tags are stored as a JSON array so the ingestion pipeline can preserve
+    # multiple SDG classifications without flattening them into one string.
+    sdg_tags = db.Column(
+        JSONB,
+        nullable=False,
+        default=list,
+        server_default=db.text("'[]'::jsonb"),
+    )
     status = db.Column(
         db.String(30),
         nullable=False,

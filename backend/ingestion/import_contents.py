@@ -1,7 +1,8 @@
 """Import crawler JSON into the existing PostgreSQL contents table.
 
-The importer is idempotent by source URL and conservatively skips records whose
-title is materially similar to a stored record. It does not need Supabase.
+The importer is idempotent by source URL. Re-running it refreshes ingestion
+metadata (including SDG tags) for the same source, while records with only a
+similar title are conservatively skipped. It does not need Supabase.
 """
 
 from __future__ import annotations
@@ -30,29 +31,49 @@ def title_similarity(first: str, second: str) -> float:
     return SequenceMatcher(None, normalise_title(first), normalise_title(second)).ratio()
 
 
-def is_duplicate(record: dict, similarity_threshold: float) -> tuple[bool, str]:
+def find_duplicate(record: dict, similarity_threshold: float) -> tuple[Content | None, str]:
     existing_url = db.session.execute(
-        select(Content.id).where(Content.source_url == record["url"])
+        select(Content).where(Content.source_url == record["url"])
     ).scalar_one_or_none()
     if existing_url is not None:
-        return True, "matching URL"
+        return existing_url, "matching URL"
 
-    candidates = db.session.execute(select(Content.id, Content.title)).all()
-    for _, title in candidates:
+    candidates = db.session.execute(select(Content)).scalars().all()
+    for candidate in candidates:
+        title = candidate.title
         if title_similarity(record["title"], title) >= similarity_threshold:
-            return True, "similar title"
-    return False, ""
+            return candidate, "similar title"
+    return None, ""
+
+
+def clean_sdg_tags(record: dict) -> list[str]:
+    raw_tags = record.get("sdg_tags", [])
+    if not isinstance(raw_tags, list):
+        return []
+    return list(dict.fromkeys(
+        tag.strip() for tag in raw_tags if isinstance(tag, str) and tag.strip()
+    ))
 
 
 def import_records(path: Path, status: str, dry_run: bool, threshold: float) -> dict[str, int]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    summary = {"inserted": 0, "skipped": 0, "invalid": 0}
+    summary = {"inserted": 0, "updated": 0, "skipped": 0, "invalid": 0}
     for record in payload.get("items", []):
         if not record.get("title") or not record.get("content") or not record.get("url"):
             summary["invalid"] += 1
             continue
-        duplicate, reason = is_duplicate(record, threshold)
-        if duplicate:
+        existing, reason = find_duplicate(record, threshold)
+        if reason == "matching URL":
+            tags = clean_sdg_tags(record)
+            if existing.sdg_tags != tags:
+                existing.sdg_tags = tags
+                summary["updated"] += 1
+                print(f"{'would update' if dry_run else 'updated'} SDG tags: {existing.title}")
+            else:
+                summary["skipped"] += 1
+                print(f"skipped (matching URL, unchanged): {record['title']}")
+            continue
+        if existing:
             summary["skipped"] += 1
             print(f"skipped ({reason}): {record['title']}")
             continue
@@ -65,6 +86,7 @@ def import_records(path: Path, status: str, dry_run: bool, threshold: float) -> 
             category=record.get("category") or "News",
             source_url=record["url"],
             cover_image_url=record.get("image_url") or None,
+            sdg_tags=clean_sdg_tags(record),
             status=status,
             published_at=published_at,
         )
